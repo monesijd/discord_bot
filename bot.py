@@ -1,4 +1,5 @@
 import os
+import subprocess
 import discord
 
 intents = discord.Intents.default()
@@ -18,6 +19,8 @@ async def on_message(message):
     python_file = open('/tmp/my_python.py', 'w')
     python_file.write(message.content)
     python_file.close()
+    result = subprocess.run(["python3", "/tmp/my_python.py"], capture_output=True)
+    await message.channel.send(result.stdout.decode('utf8'))
 
 
 # token 改放在環境變數
